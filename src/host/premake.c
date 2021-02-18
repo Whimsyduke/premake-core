@@ -10,6 +10,10 @@
 #include "premake.h"
 #include "lua_shimtable.h"
 
+#ifdef PREMAKE_MXML
+#include "mxml.h"
+#endif
+
 #if PLATFORM_MACOSX
 #include <CoreFoundation/CFBundle.h>
 #endif
@@ -140,6 +144,13 @@ static const luaL_Reg zip_functions[] = {
 };
 #endif
 
+#ifdef PREMAKE_MXML
+static const luaL_Reg mxml_functions[] = {
+	{ "LoadFile",  mxml_LoadFile },
+	{ "SaveFile",  mxml_SaveFile },
+	{ NULL, NULL }
+};
+#endif
 
 static void lua_getorcreate_table(lua_State *L, const char *modname)
 {
@@ -169,6 +180,10 @@ void luaL_register(lua_State *L, const char *libname, const luaL_Reg *l)
 	lua_pop(L, 1);
 }
 
+int luaopen_mxml(lua_State* L) {
+	luaL_newlib(L, mxml_functions);
+	return 1;
+}
 
 /**
  * Initialize the Premake Lua environment.
@@ -185,6 +200,29 @@ int premake_init(lua_State* L)
 	luaL_register(L, "string",   string_functions);
 	luaL_register(L, "buffered", buffered_functions);
 	luaL_register(L, "term",     term_functions);
+#ifdef PREMAKE_MXML
+	luaL_requiref(L, "mxml", luaopen_mxml, 1);
+	lua_getglobal(L, "mxml");
+	// Add constants of mxml to module
+	lua_pushstring(L, "MXML_NO_CALLBACK");
+	lua_pushlightuserdata(L, MXML_NO_CALLBACK);
+	lua_settable(L, -3);
+	lua_pushstring(L, "MXML_INTEGER_CALLBACK");
+	lua_pushlightuserdata(L, MXML_INTEGER_CALLBACK);
+	lua_settable(L, -3);
+	lua_pushstring(L, "MXML_OPAQUE_CALLBACK");
+	lua_pushlightuserdata(L, MXML_OPAQUE_CALLBACK);
+	lua_settable(L, -3);
+	lua_pushstring(L, "MXML_REAL_CALLBACK");
+	lua_pushlightuserdata(L, MXML_REAL_CALLBACK);
+	lua_settable(L, -3);
+	lua_pushstring(L, "MXML_TEXT_CALLBACK");
+	lua_pushlightuserdata(L, MXML_TEXT_CALLBACK);
+	lua_settable(L, -3);
+	lua_pushstring(L, "MXML_IGNORE_CALLBACK");
+	lua_pushlightuserdata(L, MXML_IGNORE_CALLBACK);
+	lua_settable(L, -3);
+#endif
 
 #ifdef PREMAKE_CURL
 	luaL_register(L, "http",     http_functions);

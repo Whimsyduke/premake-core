@@ -11,7 +11,7 @@
 
 #include <stdlib.h>
 
-#define PREMAKE_VERSION        "5.0.0-dev"
+#define PREMAKE_VERSION        "5.0.0-wh"
 #define PREMAKE_COPYRIGHT      "Copyright (C) 2002-2020 Jason Perkins and the Premake Project"
 #define PREMAKE_PROJECT_URL    "https://github.com/premake/premake-core/wiki"
 
@@ -162,6 +162,12 @@ int buffered_close(lua_State* L);
 int buffered_tostring(lua_State* L);
 int term_getTextColor(lua_State* L);
 int term_setTextColor(lua_State* L);
+
+#ifdef PREMAKE_MXML
+// Mini-XML
+int mxml_LoadFile(lua_State* L);
+int mxml_SaveFile(lua_State* L);
+#endif
 
 #ifdef PREMAKE_CURL
 int http_get(lua_State* L);

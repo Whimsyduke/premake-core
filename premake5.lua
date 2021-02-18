@@ -142,8 +142,9 @@
 		targetname  "premake5"
 		language    "C"
 		kind        "ConsoleApp"
-		includedirs { "contrib/lua/src", "contrib/luashim" }
-		links       { "lua-lib" }
+		includedirs { "contrib/lua/src", "contrib/luashim", "contrib/mxml" }
+		links       { "lua-lib", "mxmlstat-lib" }		
+		defines     { "PREMAKE_MXML" }
 
 		-- optional 3rd party libraries
 		if not _OPTIONS["no-zlib"] then
@@ -220,6 +221,7 @@
 	group "contrib"
 		include "contrib/lua"
 		include "contrib/luashim"
+		include "contrib/mxml"
 
 		if not _OPTIONS["no-zlib"] then
 			include "contrib/zlib"
