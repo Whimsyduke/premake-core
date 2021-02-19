@@ -11,7 +11,7 @@
 int mxml_LoadFile(lua_State* L)
 {
 	const char* path = luaL_checkstring(L, 1);
-	mxml_load_cb_t* cb = (mxml_load_cb_t)lua_touserdata(L, 2);
+	mxml_type_t(*cb)(mxml_node_t*) = (mxml_type_t(*)(mxml_node_t*))lua_touserdata(L, 2);
 	if (do_isfile(L, path))
 	{
 #if PLATFORM_WINDOWS

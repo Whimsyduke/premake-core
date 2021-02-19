@@ -1,4 +1,13 @@
 require "mxml"
-s = _PREMAKE_VERSION
-xml = mxml.LoadFile("C:/Code/GitHub/premake/tests/test.xml", mxml.MXML_OPAQUE_CALLBACK)
+mxml.SetWrapMargin(0)
+--xml = mxml.LoadFile("C:/Code/GitHub/premake/tests/test.xml", mxml.MXML_OPAQUE_CALLBACK)
+xml = mxml.NewXML("1.0")
+root = mxml.NewElement(xml, "Root")
+nodeA = mxml.NewElement(root, "ElementA")
+nodeB = mxml.NewElement(root, "ElementB")
+count = mxml.Retain(nodeB)
+count = mxml.Release(nodeB)
+count = mxml.Release(nodeB)
+nodeAA = mxml.NewElement(nodeA, "ElementAA")
 success = mxml.SaveFile(xml, "test1.xml", mxml.MXML_NO_CALLBACK)
+mxml.Delete(xml)

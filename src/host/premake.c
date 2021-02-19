@@ -146,10 +146,26 @@ static const luaL_Reg zip_functions[] = {
 
 #ifdef PREMAKE_MXML
 static const luaL_Reg mxml_functions[] = {
-	{ "LoadFile",  mxml_LoadFile },
-	{ "SaveFile",  mxml_SaveFile },
+	{ "Delete",			mxml_Delete },
+	{ "GetFirstChild",	mxml_GetFirstChild },
+	{ "GetLastChild",	mxml_GetLastChild },
+	{ "GetNextSibling",	mxml_GetNextSibling },
+	{ "GetParent",		mxml_GetParent },
+	{ "GetPrevSibling",	mxml_GetPrevSibling },
+	{ "LoadFile",		mxml_LoadFile },
+	{ "NewElement",		mxml_NewElement },
+	{ "NewXML",			mxml_NewXML },
+	{ "Release",		mxml_Release },
+	{ "Retain",			mxml_Retain },
+	{ "SaveFile",		mxml_SaveFile },
+	{ "SetWrapMargin",  mxml_SetWrapMargin },
 	{ NULL, NULL }
 };
+
+int luaopen_mxml(lua_State* L) {
+	luaL_newlib(L, mxml_functions);
+	return 1;
+}
 #endif
 
 static void lua_getorcreate_table(lua_State *L, const char *modname)
@@ -180,11 +196,6 @@ void luaL_register(lua_State *L, const char *libname, const luaL_Reg *l)
 	lua_pop(L, 1);
 }
 
-int luaopen_mxml(lua_State* L) {
-	luaL_newlib(L, mxml_functions);
-	return 1;
-}
-
 /**
  * Initialize the Premake Lua environment.
  */
@@ -205,22 +216,22 @@ int premake_init(lua_State* L)
 	lua_getglobal(L, "mxml");
 	// Add constants of mxml to module
 	lua_pushstring(L, "MXML_NO_CALLBACK");
-	lua_pushlightuserdata(L, MXML_NO_CALLBACK);
+	lua_pushlightuserdata(L, (void*)MXML_NO_CALLBACK);
 	lua_settable(L, -3);
 	lua_pushstring(L, "MXML_INTEGER_CALLBACK");
-	lua_pushlightuserdata(L, MXML_INTEGER_CALLBACK);
+	lua_pushlightuserdata(L, (void*)MXML_INTEGER_CALLBACK);
 	lua_settable(L, -3);
 	lua_pushstring(L, "MXML_OPAQUE_CALLBACK");
-	lua_pushlightuserdata(L, MXML_OPAQUE_CALLBACK);
+	lua_pushlightuserdata(L, (void*)MXML_OPAQUE_CALLBACK);
 	lua_settable(L, -3);
 	lua_pushstring(L, "MXML_REAL_CALLBACK");
-	lua_pushlightuserdata(L, MXML_REAL_CALLBACK);
+	lua_pushlightuserdata(L, (void*)MXML_REAL_CALLBACK);
 	lua_settable(L, -3);
 	lua_pushstring(L, "MXML_TEXT_CALLBACK");
-	lua_pushlightuserdata(L, MXML_TEXT_CALLBACK);
+	lua_pushlightuserdata(L, (void*)MXML_TEXT_CALLBACK);
 	lua_settable(L, -3);
 	lua_pushstring(L, "MXML_IGNORE_CALLBACK");
-	lua_pushlightuserdata(L, MXML_IGNORE_CALLBACK);
+	lua_pushlightuserdata(L, (void*)MXML_IGNORE_CALLBACK);
 	lua_settable(L, -3);
 #endif
 

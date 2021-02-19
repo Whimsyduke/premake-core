@@ -12,7 +12,7 @@ int mxml_SaveFile(lua_State* L)
 {
 	mxml_node_t* node = (mxml_node_t*)lua_touserdata(L, 1);
 	const char* path = luaL_checkstring(L, 2);
-	mxml_save_cb_t* cb = (mxml_save_cb_t*) lua_touserdata(L, 2);
+	mxml_save_cb_t cb = (mxml_save_cb_t) lua_touserdata(L, 2);
 #if PLATFORM_WINDOWS
 	FILE* file;
 	wchar_t wide_path[PATH_MAX];

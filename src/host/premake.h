@@ -163,12 +163,6 @@ int buffered_tostring(lua_State* L);
 int term_getTextColor(lua_State* L);
 int term_setTextColor(lua_State* L);
 
-#ifdef PREMAKE_MXML
-// Mini-XML
-int mxml_LoadFile(lua_State* L);
-int mxml_SaveFile(lua_State* L);
-#endif
-
 #ifdef PREMAKE_CURL
 int http_get(lua_State* L);
 int http_post(lua_State* L);
@@ -177,6 +171,23 @@ int http_download(lua_State* L);
 
 #ifdef PREMAKE_COMPRESSION
 int zip_extract(lua_State* L);
+#endif
+
+#ifdef PREMAKE_MXML
+// Mini-XML
+int mxml_Delete(lua_State* L);
+int mxml_GetFirstChild(lua_State* L);
+int mxml_GetLastChild(lua_State* L);
+int mxml_GetNextSibling(lua_State* L);
+int mxml_GetParent(lua_State* L);
+int mxml_GetPrevSibling(lua_State* L);
+int mxml_LoadFile(lua_State* L);
+int mxml_NewElement(lua_State* L);
+int mxml_NewXML(lua_State* L);
+int mxml_Release(lua_State* L);
+int mxml_Retain(lua_State* L);
+int mxml_SaveFile(lua_State* L);
+int mxml_SetWrapMargin(lua_State* L);
 #endif
 
 #ifdef _MSC_VER
